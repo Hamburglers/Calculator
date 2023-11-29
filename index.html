@@ -12,24 +12,24 @@
             <div class="operation"></div>
             <div class="input">0</div>
         </div>
-        <button class="top clear">CLEAR</button>
-        <button class="top delete">DELETE</button>
-        <button onclick="setFirst(7)">7</button>
-        <button onclick="setFirst(8)">8</button>
-        <button onclick="setFirst(9)">9</button>
-        <button onclick="setOperator('divide')">÷</button>
-        <button onclick="setFirst(4)">4</button>
-        <button onclick="setFirst(5)">5</button>
-        <button onclick="setFirst(6)">6</button>
-        <button onclick="setOperator('multiply')">×</button>
-        <button onclick="setFirst(1)">1</button>
-        <button onclick="setFirst(2)">2</button>
-        <button onclick="setFirst(3)">3</button>
-        <button onclick="setOperator('subtract')">-</button>
-        <button>.</button>
-        <button onclick="setFirst(0)">0</button>
-        <button>=</button>
-        <button onclick="setOperator('add')">+</button>
+        <button class="clickable top clear" onclick="clearInput()">CLEAR</button>
+        <button class="clickable top delete" onclick="deleteDigit()">DELETE</button>
+        <button class = "clickable" onclick="setFirst(7)">7</button>
+        <button class = "clickable" onclick="setFirst(8)">8</button>
+        <button class = "clickable" onclick="setFirst(9)">9</button>
+        <button class = "clickable" onclick="setOperator('divide')">÷</button>
+        <button class = "clickable" onclick="setFirst(4)">4</button>
+        <button class = "clickable" onclick="setFirst(5)">5</button>
+        <button class = "clickable" onclick="setFirst(6)">6</button>
+        <button class = "clickable" onclick="setOperator('multiply')">×</button>
+        <button class = "clickable" onclick="setFirst(1)">1</button>
+        <button class = "clickable" onclick="setFirst(2)">2</button>
+        <button class = "clickable" onclick="setFirst(3)">3</button>
+        <button class = "clickable" onclick="setOperator('subtract')">-</button>
+        <button class = "clickable" onclick="decimal()">.</button>
+        <button class = "clickable" onclick="setFirst(0)">0</button>
+        <button class = "clickable" onclick="calculate()">=</button>
+        <button class = "clickable" onclick="setOperator('add')">+</button>
     </div>
     <script>
         function add(x, y) {
@@ -58,9 +58,11 @@
         }
 
         let digits = 0;
+        let firstDigit = 0;
         function setFirst(num) {
             if (digits === 0 || operatorSet) {
                 digits = num
+                operatorSet = false
             } else {
                 digits += `${num}`
             }
@@ -85,13 +87,90 @@
                     operation.textContent = digits + " - "
                     break;
             }
+            firstDigit = digits
             operatorSet = true
+        }
+
+        let answer = 0
+        function calculate() {
+            if (operation.textContent.includes("="))
+                return
+            answer = operate(inputOperator, parseFloat(firstDigit), parseFloat(digits))
+
+            // Convert to string for processing
+            let answerStr = answer.toString();
+
+            // Check if the length exceeds 10
+            if (answerStr.length > 10) {
+                // Check if the number is a floating point
+                if (answerStr.includes('.')) {
+                    // Calculate the number of digits before the decimal point
+                    let integerPartLength = answerStr.split('.')[0].length;
+
+                    // Calculate the maximum number of decimal places that can be displayed
+                    let maxDecimalPlaces = 9 - integerPartLength;
+
+                    // Round the number to the maximum decimal places
+                    answer = Number(answer.toFixed(maxDecimalPlaces));
+
+                    // Remove trailing zeros after decimal point
+                    answerStr = answer.toString();
+                    answerStr = answerStr.replace(/\.?0+$/, '');
+                } else {
+                    // If the number is an integer and exceeds 10 digits, truncate it
+                    answerStr = answerStr.substring(0, 10);
+                }
+            }
+
+            answer = answerStr
+            input.textContent = answer
+            operation.textContent += digits + " = "
+            digits = parseFloat(answer)
+        }
+
+        function clearInput() {
+            operation.textContent = ''
+            input.textContent = 0
+            digits = 0
+        }
+
+        function deleteDigit() {
+            if (input.textContent.length > 1) {
+                // Remove the last character
+                input.textContent = input.textContent.slice(0, -1);
+                digits = parseFloat(input.textContent)
+            } else {
+                // If only one character is left, reset to 0
+                input.textContent = '0';
+                digits = 0
+            }
+        }
+
+        function decimal() {
+            input.textContent += "."
+            digits += "."
         }
 
         const container = document.querySelector("#container")
         const result = document.querySelector(".result")
         const operation = document.querySelector(".operation")
         const input = document.querySelector(".input")
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                if (button.classList.contains('clear')) {
+                    button.style.backgroundColor = '#d27d7d'; // Different color for 'top' class
+                } else if (button.classList.contains('delete')) {
+                    button.style.backgroundColor = '#8686cf';
+                } else {
+                    button.style.backgroundColor = '#ccc';
+                }
+            });
+            button.addEventListener('mouseout', () => {
+                button.style.backgroundColor = ''; // Reset to original style
+            });
+        });
+
     </script>
 </body>
 </html>

@@ -49,6 +49,10 @@ button {
     background-color: #eee;
 }
 
+.clickable:hover {
+    cursor: pointer;
+}
+
 .clear {
     background-color: #faa;
 }
