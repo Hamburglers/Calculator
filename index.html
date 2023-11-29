@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <div id="container">
+        <div class="result"></div>
+        <div class="top button">Clear</div>
+        <div class="top button">Delete</div>
+        <div class="button">7</div>
+        <div class="button">8</div>
+        <div class="button">9</div>
+        <div class="button">÷</div>
+        <div class="button">4</div>
+        <div class="button">5</div>
+        <div class="button">6</div>
+        <div class="button">×</div>
+        <div class="button">1</div>
+        <div class="button">2</div>
+        <div class="button">3</div>
+        <div class="button">-</div>
+        <div class="button">.</div>
+        <div class="button">0</div>
+        <div class="button">=</div>
+        <div class="button">+</div>
+    </div>
+    <script>
+        function add(x, y) {
+            return x + y
+        }
+        function subtract(x, y) {
+            return x - y
+        }
+        function multiply(x, y) {
+            return x * y
+        }
+        function divide(x, y) {
+            return x / y
+        }
+        function operate(operator, x, y) {
+            switch (operator) {
+                case "add":
+                    return add(x, y)
+                case "subtract":
+                    return subtract(x, y)
+                case "multiply":
+                    return multiply(x, y)
+                case "divide":
+                    return divide(x, y)
+            }
+        }
+    </script>
+</body>
+</html>
