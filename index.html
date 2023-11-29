@@ -8,25 +8,28 @@
 </head>
 <body>
     <div id="container">
-        <div class="result">0</div>
-        <div class="top button clear">CLEAR</div>
-        <div class="top button delete">DELETE</div>
-        <div class="button">7</div>
-        <div class="button">8</div>
-        <div class="button">9</div>
-        <div class="button">÷</div>
-        <div class="button">4</div>
-        <div class="button">5</div>
-        <div class="button">6</div>
-        <div class="button">×</div>
-        <div class="button">1</div>
-        <div class="button">2</div>
-        <div class="button">3</div>
-        <div class="button">-</div>
-        <div class="button">.</div>
-        <div class="button">0</div>
-        <div class="button">=</div>
-        <div class="button">+</div>
+        <div class="result">
+            <div class="operation"></div>
+            <div class="input">0</div>
+        </div>
+        <button class="top clear">CLEAR</button>
+        <button class="top delete">DELETE</button>
+        <button onclick="setFirst(7)">7</button>
+        <button onclick="setFirst(8)">8</button>
+        <button onclick="setFirst(9)">9</button>
+        <button onclick="setOperator('divide')">÷</button>
+        <button onclick="setFirst(4)">4</button>
+        <button onclick="setFirst(5)">5</button>
+        <button onclick="setFirst(6)">6</button>
+        <button onclick="setOperator('multiply')">×</button>
+        <button onclick="setFirst(1)">1</button>
+        <button onclick="setFirst(2)">2</button>
+        <button onclick="setFirst(3)">3</button>
+        <button onclick="setOperator('subtract')">-</button>
+        <button>.</button>
+        <button onclick="setFirst(0)">0</button>
+        <button>=</button>
+        <button onclick="setOperator('add')">+</button>
     </div>
     <script>
         function add(x, y) {
@@ -53,6 +56,42 @@
                     return divide(x, y)
             }
         }
+
+        let digits = 0;
+        function setFirst(num) {
+            if (digits === 0 || operatorSet) {
+                digits = num
+            } else {
+                digits += `${num}`
+            }
+            input.textContent = digits
+        }
+
+        let operatorSet = false
+        let inputOperator = ""
+        function setOperator(operator) {
+            inputOperator = operator
+            switch (operator) {
+                case "divide":
+                    operation.textContent = digits + " ÷ "
+                    break;
+                case "multiply":
+                    operation.textContent = digits + " × "
+                    break;
+                case "add":
+                    operation.textContent = digits + " + "
+                    break;
+                case "subtract":
+                    operation.textContent = digits + " - "
+                    break;
+            }
+            operatorSet = true
+        }
+
+        const container = document.querySelector("#container")
+        const result = document.querySelector(".result")
+        const operation = document.querySelector(".operation")
+        const input = document.querySelector(".input")
     </script>
 </body>
 </html>

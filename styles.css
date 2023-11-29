@@ -17,18 +17,26 @@
 
 .result {
     border-radius: 10px;
-    width: 260px;
-    height: 100px;
+    width: 226px;
+    height: 90px;
     border: 2px solid black;
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
     font-size: 40px;
     background-color: #eee;
-    padding: 0 20px 20px 0;
+    padding: 0px 20px 20px 20px;
 }
 
-.button {
+.operation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-size: 20px;
+}
+
+button {
     display: flex;
     border-radius: 10px;
     border: 2px solid black;
@@ -50,7 +58,7 @@
 }
 
 .top {
-    width: 134px;
+    width: 130px;
     height: 60px;
     font-size: x-large;
 }
